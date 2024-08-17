@@ -1,0 +1,8 @@
+[
+  {
+    "image_path": "/images/demo.webp",
+    "display_name": "Demo Droplet",
+    "container_docker_image": "flowcase/test:latest",
+    "description": "This is the description for Demo Droplet"
+  }
+]

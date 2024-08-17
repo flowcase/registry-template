@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Droplet Registry</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #F0F1F3; /* Light Gray */
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .navbar {
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-brand img {
+      height: 40px;
+    }
+    .nav-link {
+      color: #4E5D6C; /* Dark Gray */
+      font-weight: 500;
+    }
+    .btn-warning {
+      background-color: #5E37A6; /* Purple */
+      border-color: #5E37A6;
+      color: #fff;
+    }
+    .btn-warning:hover {
+      background-color: #462887;
+      border-color: #462887;
+    }
+    .droplet-card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+    .droplet-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    .droplet-card img {
+      width: 100%;
+      height: auto;
+      border-bottom: 2px solid #ddd;
+    }
+    .droplet-card .card-body {
+      padding: 20px;
+    }
+    .droplet-card h4 {
+      font-weight: 600;
+      color: #000000; /* Black */
+    }
+    .droplet-card p {
+      color: #4E5D6C; /* Dark Gray */
+      font-size: 14px;
+    }
+    footer {
+      background-color: #5E37A6; /* Purple */
+      color: #ffffff;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Droplet Registry Section -->
+  <section class="container mt-5">
+    <div class="row" id="droplet-container">
+      <!-- Dynamic cards will be injected here -->
+    </div>
+  </section>
+
+  <!-- Bootstrap and JS dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- Custom JS -->
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		fetch('/droplets.json')
+			.then(response => response.json())
+			.then(data => {
+				const container = document.getElementById('droplet-container');
+				
+				data.forEach(droplet => {
+					const card = document.createElement('div');
+					card.className = 'col-md-4 mb-4';
+					
+					card.innerHTML = `
+						<div class="droplet-card">
+							<img src="${droplet.image_path}" alt="${droplet.display_name}">
+							<div class="card-body">
+								<h4 class="card-title">${droplet.display_name}</h4>
+								<h6 class="card-subtitle mb-2 text-muted">${droplet.container_docker_image}</h6>
+								<p class="card-text">${droplet.description}</p>
+							</div>
+						</div>
+					`;
+					
+					container.appendChild(card);
+				});
+			})
+			.catch(error => console.error('Error loading droplets:', error));
+	});
+</script>
+</body>
+</html>
