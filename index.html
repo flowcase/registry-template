@@ -87,6 +87,8 @@
 			.then(response => response.json())
 			.then(data => {
 				const container = document.getElementById('droplet-container');
+				//order by display_name
+				data.sort((a, b) => a.display_name.localeCompare(b.display_name));
 				
 				data.forEach(droplet => {
 					const card = document.createElement('div');
