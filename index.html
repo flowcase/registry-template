@@ -83,7 +83,7 @@
 <!-- Custom JS -->
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		fetch('/droplets.json')
+		fetch('droplets.json')
 			.then(response => response.json())
 			.then(data => {
 				const container = document.getElementById('droplet-container');
@@ -108,7 +108,11 @@
 					container.appendChild(card);
 				});
 			})
-			.catch(error => console.error('Error loading droplets:', error));
+			.catch(error => {
+        console.error('Error:', error);
+        const container = document.getElementById('droplet-container');
+        container.innerHTML = '<div class="col"><p class="text-center">An error occurred while fetching droplets. Please try again later.</p></div>';
+      });
 	});
 </script>
 </body>
